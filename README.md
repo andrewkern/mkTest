@@ -1,2 +1,28 @@
 # mkTest
 McDonald-Kreitman test written in Ruby. This code is quite old-- probably written in around 2002 -- so be careful!
+
+# usage
+To use this script you'll need a ruby interpretter (installed by default on some systems) and coding sequence data in 
+fasta format. The input data must be in-frame (i.e. the first base represents the first codon position). 
+Please see the provided example dataset.
+
+```
+$ ruby mkTest.rb
+mkTest.rb ingroup.fa outgroup.fa
+	options:
+		-p outgroup2.fa (polarized MK test)
+```
+
+I've also provided a bit of test data (the venerable Adh locus from Drosophila melanogaster) to make sure
+stuff works. So calling
+
+```
+ruby mkTest.rb kreitmanAdh.fa mauritianaAdh.fa
+aaFix	aaPoly	silFix	silPoly
+6	1	8	8
+```
+
+tells us that there were 6 amino acid fixations (aka nonsynonymous fixations), 1 amino acid polymorphism, 8 silent fixations,
+and 8 silent polymorphisms. To get an associated p-value one can use a Fisher Exact test or similar on the resulting 2x2 table.
+
+
