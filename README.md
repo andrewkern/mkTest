@@ -25,4 +25,8 @@ aaFix	aaPoly	silFix	silPoly
 tells us that there were 6 amino acid fixations (aka nonsynonymous fixations), 1 amino acid polymorphism, 8 silent fixations,
 and 8 silent polymorphisms. To get an associated p-value one can use a Fisher Exact test or similar on the resulting 2x2 table.
 
+## options
+In addition to the vanilla MK test, this script will do a polarized MK test along the ingroup lineage. That can be 
+specified using the `-p` flag and then by providing a separate, second outgroup file. Polarization is done using 
+a parsimony reconstruction of the ancestral state at each codon. 
 
