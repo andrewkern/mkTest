@@ -31,5 +31,5 @@ specified using the `-p` flag and then by providing a separate, second outgroup 
 a parsimony reconstruction of the ancestral state at each codon. 
 
 # postscript
-There is something like an easter egg in this script-- the first 3k lines or so are actually a set of Ruby classes that are usable for a large
+There is something like an easter egg in this script-- the first 4,200 lines of code or so are actually a set of Ruby classes that are usable for a large
 number of population genetics tasks, way beyond MK tests. One could take those and do lots of other stuff, if you're interested. Sure, it makes for a bloated script but also pretty convenient :) 
