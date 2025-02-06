@@ -4102,38 +4102,37 @@ module CodingSequence
                       end
 
                       def Alignment.fishersExactTest(anArray)		#takes an array of length 4, [a,c,b,d]
-                        tmpArray= Array.new
-                        anArray.each{ | x | tmpArray << x}
+                        tmpArray= anArray.clone
                         n = anArray.sum.to_i
-                        q1 = (anArray[0] + anArray[2]).logFactorial + (anArray[1] + anArray[3]).logFactorial + (anArray[0] + anArray[1]).logFactorial + (anArray[2] + anArray[3]).logFactorial - n.logFactorial
-                        q2 = anArray[0].logFactorial + anArray[1].logFactorial + anArray[2].logFactorial + anArray[3].logFactorial
+                        q1 = (tmpArray[0] + tmpArray[2]).logFactorial + (tmpArray[1] + tmpArray[3]).logFactorial + (tmpArray[0] + tmpArray[1]).logFactorial + (tmpArray[2] + tmpArray[3]).logFactorial - n.logFactorial
+                        q2 = tmpArray[0].logFactorial + tmpArray[1].logFactorial + tmpArray[2].logFactorial + tmpArray[3].logFactorial
                         pTail1 = 10 ** (q1 - q2)
                         origP1 = 10 ** (q1 - q2)
-                        while (! anArray.include?(0))
-                          if (anArray[0] * anArray[3]) - (anArray[1] * anArray[2]) < 0
-                            anArray[0] -= 1
-                            anArray[3] -= 1
-                            anArray[1] += 1
-                            anArray[2] += 1
+                        while (! tmpArray.include?(0))
+                          if (tmpArray[0] * tmpArray[3]) - (tmpArray[1] * tmpArray[2]) < 0
+                            tmpArray[0] -= 1
+                            tmpArray[3] -= 1
+                            tmpArray[1] += 1
+                            tmpArray[2] += 1
                           else
-                            anArray[0] += 1
-                            anArray[3] += 1
-                            anArray[1] -= 1
-                            anArray[2] -= 1
+                            tmpArray[0] += 1
+                            tmpArray[3] += 1
+                            tmpArray[1] -= 1
+                            tmpArray[2] -= 1
                           end
-                          q2 = anArray[0].logFactorial + anArray[1].logFactorial + anArray[2].logFactorial + anArray[3].logFactorial
+                          q2 = tmpArray[0].logFactorial + tmpArray[1].logFactorial + tmpArray[2].logFactorial + tmpArray[3].logFactorial
                           pTail1 += 10 ** (q1 - q2)
 
                         end
                         #now add up second tail
                         if (tmpArray[0] * tmpArray[3]) - (tmpArray[1] * tmpArray[2]) < 0
-                          adj = [anArray[1],anArray[2]].min
+                          adj = [tmpArray[1],tmpArray[2]].min
                           tmpArray[1] -= adj
                           tmpArray[2] -= adj
                           tmpArray[0] += adj
                           tmpArray[3] += adj
                         else
-                          adj = [anArray[0],anArray[3]].min
+                          adj = [tmpArray[0],tmpArray[3]].min
                           tmpArray[1] += adj
                           tmpArray[2] += adj
                           tmpArray[0] -= adj
@@ -4163,7 +4162,30 @@ module CodingSequence
                         return pTail1 + pTail2
                       end
                     end	
+include Math
 
+class Fixnum
+  def factorial
+  	if self == 0
+  		return 1
+  	end
+  	sum = self
+  	a = self - 1
+    while a > 0
+     sum *= a
+     a -= 1
+    end
+    return sum
+  end
+  
+  def logFactorial		#this returns log factorial
+  	sum = 0
+  	1.upto(self){ | i |
+  		sum += Math.log10(i)
+  		}
+  	return sum
+  end
+end
 ###############################
 ########
 #########           Main Loop for MK test below
@@ -4197,14 +4219,15 @@ if ARGV.include?("-p")
 
 else
   #normal MK test
-  print "aaFix\taaPoly\tsilFix\tsilPoly\n"
+  print "aaFix\taaPoly\tsilFix\tsilPoly\tFET_p_val\n"
   ing.asCodingSequence(nil,nil)
   outg.asCodingSequence(nil,nil)
   align = Alignment.new(ing,outg,nil)
 
   #print align.sequenceMatrix1.matrix[0],"\n"
   array = align.mkTestGreedy
-  print array[0],"\t",array[1],"\t",array[2],"\t",array[3],"\n"
+  p_val = Alignment.fishersExactTest(array)
+  print array[0],"\t",array[1],"\t",array[2],"\t",array[3],"\t%.2e\n" % p_val
 
 end
 
