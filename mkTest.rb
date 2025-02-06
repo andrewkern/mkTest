@@ -1052,7 +1052,7 @@ module CodingSequence
                   keys.delete("TAG")
                   codonDictionary = Hash.new
                   keys.each{ | key | codonDictionary[key] = Hash.new }
-                  aFile = File.new("/Users/adk/rubyStuff/codonMatrix.txt")  #/Network/Servers/i-dpgp.ucdavis.edu/Users/adk/rubyStuff/codonMatrix.txt")
+                  aFile = File.new("codonMatrix.txt")  #/Network/Servers/i-dpgp.ucdavis.edu/Users/adk/rubyStuff/codonMatrix.txt")
                   aFile.each_line{ | line |
                     array = line.chomp.split("\t")
                     if  array.first != ""
