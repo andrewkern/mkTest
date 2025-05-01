@@ -4212,9 +4212,11 @@ if ARGV.include?("-p")
   outg2.asCodingSequence(nil,nil)
   align = Alignment.new(ing,outg,outg2)
   array = align.polMKTestArrayGreedy
-  print "popn1 aaFix\tpopn1 aaPoly\tpopn1 silFix\tpopn1 silPoly\tpopn2 aaFix\tpopn2 aaPoly\tpopn2 silFix\tpopn2 silPoly\n"
-  print array[0][0],"\t",array[0][1],"\t",array[0][2],"\t",array[0][3],"\t"
-	print array[1][0],"\t",array[1][1],"\t",array[1][2],"\t",array[1][3],"\n"
+  print "popn1 aaFix\tpopn1 aaPoly\tpopn1 silFix\tpopn1 silPoly\tpopn1 FET_p_val\tpopn2 aaFix\tpopn2 aaPoly\tpopn2 silFix\tpopn2 silPoly\tpopn2 FET_p_val\n"
+  p_val1 = Alignment.fishersExactTest(array[0])
+  p_val2 = Alignment.fishersExactTest(array[1])
+  print array[0][0],"\t",array[0][1],"\t",array[0][2],"\t",array[0][3],"\t%.2e\t" % p_val1
+  print array[1][0],"\t",array[1][1],"\t",array[1][2],"\t",array[1][3],"\t%.2e\n" % p_val2
 
 
 else
@@ -4230,5 +4232,3 @@ else
   print array[0],"\t",array[1],"\t",array[2],"\t",array[3],"\t%.2e\n" % p_val
 
 end
-
-
